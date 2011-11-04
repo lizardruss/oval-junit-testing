@@ -17,19 +17,13 @@ public class AssertTest {
 	}
 
 	@Test
-	public void testAssertErrorCodesObjectStringArray() {
-		person.setFirstName("");
-		Assert.assertErrorCodes(person, "person.firstname.empty");
-	}
-
-	@Test
-	public void testAssertErrorCodesObjectStringStringArray() {
+	public void testAssertErrorCodesMatchingErrorCode() {
 		person.setFirstName(null);
 		Assert.assertErrorCodes(person, "person.firstname.null");
 	}
 
 	@Test(expected = AssertionError.class)
-	public void testAssertErrorCodesObjectStringStringArrayNoMatch() {
+	public void testAssertErrorCodesNonMatchingErrorCode() {
 		person.setFirstName(null);
 
 		try {
@@ -61,8 +55,14 @@ public class AssertTest {
 		}
 	}
 
+	@Test
+	public void testAssertValidWithoutProfile() {
+		person.setFirstName("");
+		Assert.assertValid(person);
+	}
+
 	@Test(expected = AssertionError.class)
-	public void testAssertValidObjectString() {
+	public void testAssertInvalidWithProfile() {
 		person.setFirstName("");
 
 		try {

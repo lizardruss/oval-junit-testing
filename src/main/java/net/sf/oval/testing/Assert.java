@@ -19,10 +19,10 @@ public class Assert {
 	public static void assertErrorCodes(Object object, String profile,
 			String[] errorCodes) {
 		Validator validator = new Validator();
+		validator.disableAllProfiles();
 		validator.enableProfile(profile);
+		
 		List<ConstraintViolation> violations = validator.validate(object);
-		validator.disableProfile(profile);
-
 		List<String> violatedErrorCodes = new ArrayList<String>();
 		for (ConstraintViolation violation : violations) {
 			for (String errorCode : errorCodes) {
@@ -44,10 +44,10 @@ public class Assert {
 
 	public static void assertValid(Object object, String profile) {
 		Validator validator = new Validator();
+		validator.disableAllProfiles();
 		validator.enableProfile(profile);
-		List<ConstraintViolation> violations = validator.validate(object);
-		validator.disableProfile(profile);
 
+		List<ConstraintViolation> violations = validator.validate(object);
 		if (violations.size() > 0) {
 			fail("Validation failed with the following constraint violations: "
 					+ Arrays.toString(violations.toArray()));
